@@ -1,0 +1,62 @@
+% Weather Data Analysis Project 🌦️
+% Author: Your Name
+% Description: Import weather dataset, compute statistics, 
+% and visualize trends using MATLAB.
+
+clc; clear; close all;
+
+filename = 'weather_data.csv'; % CSV file with Date, Temp, Humidity, Rainfall
+data = readtable(filename);
+
+% Extract columns
+dates = datetime(data.Date, 'InputFormat', 'yyyy-MM-dd');
+temperature = data.Temperature;
+humidity = data.Humidity;
+rainfall = data.Rainfall;
+
+mean_temp = mean(temperature);
+max_temp = max(temperature);
+min_temp = min(temperature);
+std_temp = std(temperature);
+
+mean_hum = mean(humidity);
+mean_rain = mean(rainfall);
+
+fprintf('--- Weather Data Summary ---\n');
+fprintf('Average Temperature: %.2f °C\n', mean_temp);
+fprintf('Max Temperature: %.2f °C\n', max_temp);
+fprintf('Min Temperature: %.2f °C\n', min_temp);
+fprintf('Temperature Std Dev: %.2f\n', std_temp);
+fprintf('Average Humidity: %.2f %%\n', mean_hum);
+fprintf('Average Rainfall: %.2f mm\n', mean_rain);
+
+% Temperature Trend
+figure;
+plot(dates, temperature, '-o', 'LineWidth', 2, 'Color', 'r');
+xlabel('Date'); ylabel('Temperature (°C)');
+title('Temperature Trend');
+grid on;
+
+% Humidity Trend
+figure;
+bar(dates, humidity, 'FaceColor', [0.2 0.6 0.8]);
+xlabel('Date'); ylabel('Humidity (%)');
+title('Humidity Levels');
+grid on;
+
+% Rainfall Trend
+figure;
+stem(dates, rainfall, 'filled', 'Color', 'b');
+xlabel('Date'); ylabel('Rainfall (mm)');
+title('Rainfall Pattern');
+grid on;
+
+% Combined Plot
+figure;
+yyaxis left
+plot(dates, temperature, '-r', 'LineWidth', 2); ylabel('Temperature (°C)');
+yyaxis right
+bar(dates, rainfall, 0.3, 'FaceColor', [0 0.5 1]); ylabel('Rainfall (mm)');
+xlabel('Date');
+title('Temperature vs Rainfall');
+grid on;
